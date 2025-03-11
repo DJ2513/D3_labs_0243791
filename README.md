@@ -23,7 +23,7 @@ To Stop the server from running, go to the terminal and inside of it press **CON
 
 ## Pending labs
 - [x] 1) D3 Fundamentals
-- [ ] 2) Select and data binding
+- [x] 2) Select and data binding
 - [ ] 3) Load Data from File
 - [ ] Challenge I: Buildings of the world 
 - [ ] 4) Scales
