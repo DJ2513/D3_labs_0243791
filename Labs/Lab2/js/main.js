@@ -15,7 +15,7 @@ react.enter()
   .append("rect")
   .attr("width", 40)
   .attr("height", (d) => { return d })
-  .attr("x", (d, i) => { return i * 50 })
+  .attr("x", (_d, i) => { return i * 50 })
   .attr("y", 100)
   .attr("fill", "blue");
 
