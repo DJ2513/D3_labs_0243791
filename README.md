@@ -30,8 +30,8 @@ To Stop the server from running, go to the terminal and inside of it press **CON
 - [x] 5) Margins, groups, axes and labels
 - [x] Project I: Star Brewery
 - [x] 6) Simulating update events  
-- [ ] 7) Playing with transitions 
-- [ ] Project II: Project Leaf 
+- [x] 7) Playing with transitions 
+- [x] Project II: Project Leaf 
 - [ ] 8) Event Handling
 - [ ] 9) Line chart
 - [ ] 10) Area chart
