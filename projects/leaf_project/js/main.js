@@ -1,25 +1,22 @@
 
 var margin = { top: 10, right: 10, bottom: 100, left: 100 };
-var width = 800;
-var height = 600;
-
-var charWidth = width - margin.left - margin.right;
-var charHeight = height - margin.top - margin.bottom;
+var width = 800 - margin.left - margin.right;
+var height = 600 - margin.top - margin.bottom;
 
 var svg = d3.select("#chart-area")
 	.append("svg")
-	.attr("width", charWidth + margin.right + margin.left)
-	.attr("height", charHeight + margin.top + margin.bottom)
+	.attr("width", width + margin.right + margin.left)
+	.attr("height", height + margin.top + margin.bottom)
 	.append("g")
 	.attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
 var xScale = d3.scaleLog()
 	.domain([142, 150000])
-	.range([0, charWidth]);
+	.range([0, width]);
 
 var yScale = d3.scaleLinear()
 	.domain([0, 90])
-	.range([charHeight, 0]);
+	.range([height, 0]);
 
 var area = d3.scaleLinear()
 	.domain([2000, 1400000000])
@@ -29,22 +26,22 @@ var color = d3.scaleOrdinal(d3.schemePastel1);
 
 var xAxisG = svg.append("g")
 	.attr("class", "x axis")
-	.attr("transform", "translate(0," + charHeight + ")")
+	.attr("transform", "translate(0," + height + ")")
 
 var yAxisG = svg.append("g")
 	.attr("class", "y axis");
 
 svg.append("text")
 	.attr("class", "axis-label")
-	.attr("x", charWidth / 2)
-	.attr("y", charHeight + 50)
+	.attr("x", width / 2)
+	.attr("y", height + 50)
 	.attr("text-anchor", "middle")
 	.attr("fill", "black")
 	.text("Income (GDP per Capita)");
 
 svg.append("text")
 	.attr("class", "axis-label")
-	.attr("x", -charHeight / 2)
+	.attr("x", -height / 2)
 	.attr("y", -60)
 	.attr("transform", "rotate(-90)")
 	.attr("text-anchor", "middle")
@@ -53,8 +50,8 @@ svg.append("text")
 
 var yearText = svg.append("text")
 	.attr("class", "year-text")
-	.attr("x", charWidth - 30)
-	.attr("y", charHeight - 10)
+	.attr("x", width - 30)
+	.attr("y", height - 10)
 	.attr("text-anchor", "end")
 	.attr("font-size", "50px")
 	.style("opacity", "0.4")

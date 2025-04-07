@@ -8,11 +8,8 @@ d3.json("./data/revenues.json").then(data => {
   });
 
   var margin = { top: 10, right: 10, bottom: 100, left: 100 };
-  var width = 600;
-  var height = 400;
-
-  var charWidth = width - margin.left - margin.right;
-  var charHeight = height - margin.top - margin.bottom;
+  var width = 600 - margin.left - margin.right;
+  var height = 400 - margin.top - margin.bottom;
 
   var svg = d3.select("#chart-area")
     .append("svg")
@@ -25,7 +22,7 @@ d3.json("./data/revenues.json").then(data => {
 
   var x = d3.scaleBand()
     .domain(data.map(d => d.month))
-    .range([0, charWidth])
+    .range([0, width])
     .padding(0.3);
 
   var y = d3.scaleLinear()
@@ -47,7 +44,7 @@ d3.json("./data/revenues.json").then(data => {
     .attr("class", "y axis")
 
   svg.append("text")
-    .attr("x", charWidth / 2 + margin.left)
+    .attr("x", width / 2 + margin.left)
     .attr("y", charHeight + 50)
     .attr("font-size", "20px")
     .style("fill", "white")
