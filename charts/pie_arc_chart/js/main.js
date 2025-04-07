@@ -5,37 +5,43 @@
 
 */
 
-var margin ={top: 20, right: 300, bottom: 30, left: 50},
+var margin = { top: 20, right: 300, bottom: 30, left: 50 },
     width = 800 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom,
     radius = Math.min(width, height) / 2;
 
 var svg = d3.select("#chart-area").append("svg")
-	.attr("width", width + margin.left + margin.right)
+    .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
+
 var g = svg.append("g")
-    .attr("transform", 
-    	"translate(" + width / 2 + "," + height / 2 + ")");
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
-// TODO: create the arc generator for a donut chart.
-// var arc = ...
+// Create the arc generator for a donut chart
+var arc = d3.arc()
+    .outerRadius(radius - 20)
+    .innerRadius(radius - 80);
 
-// TODO: create the pie layout generator.
-// var pie = ...
+// Create the pie layout generator
+var pie = d3.pie()
+    .value(d => d.count)
+    .sort(null);
 
 d3.tsv("data/donut2.tsv").then((data) => {
-    // TODO: Transform data to its proper format
-    // count -> number
-    // fruit -> lower case
+    // Transform data to its proper format
+    data.forEach(d => {
+        d.count = +d.count;
+        d.fruit = d.fruit.toLowerCase();
+    });
 
-    console.log(data);
-    
-    // TODO: create the nest function to group by fruits
-    var regionsByFruit = null;
+    // Create the nest function to group by fruits
+    var regionsByFruit = d3.nest()
+        .key(d => d.fruit)
+        .entries(data);
 
-    console.log(regionsByFruit)
+    console.log(regionsByFruit);
 
     var label = d3.select("form").selectAll("label")
         .data(regionsByFruit)
@@ -43,17 +49,17 @@ d3.tsv("data/donut2.tsv").then((data) => {
 
     // Dynamically add radio buttons to select the fruit
     label.append("input")
-        	.attr("type", "radio")
-        	.attr("name", "fruit")
-        	.attr("value", (d) => { return d.key; })
-        	.on("change", update)
+        .attr("type", "radio")
+        .attr("name", "fruit")
+        .attr("value", d => d.key)
+        .on("change", update)
         .filter((d, i) => { return !i; })
-        	.each(update)
-        	.property("checked", true);
+        .each(update)
+        .property("checked", true);
 
     label.append("span")
         .attr("fill", "red")
-        .text((d) => { return d.key; });
+        .text(d => d.key);
 
 }).catch((error) => {
     console.log(error);
@@ -70,14 +76,14 @@ function update(region) {
 
     // EXIT old elements from the screen.
     path.exit()
-        .datum((d, i) => { 
-        	return findNeighborArc(i, data1, data0, key) || d; 
+        .datum((d, i) => {
+            return findNeighborArc(i, data1, data0, key) || d;
         })
         .transition()
         .duration(750)
         .attrTween("d", arcTween)
         .remove();
-    
+
     // UPDATE elements still on the screen.
     path.transition()
         .duration(750)
@@ -86,16 +92,13 @@ function update(region) {
     // ENTER new elements in the array.
     path.enter()
         .append("path")
-        .each((d, i) => { 
-        	this._current = 
-        		findNeighborArc(i, data0, data1, key) || d; 
-        }) 
-        .attr("fill", (d) => {  
-        	return color(d.data.region) 
+        .each(function (d, i) {
+            this._current = findNeighborArc(i, data0, data1, key) || d;
         })
+        .attr("fill", d => color(d.data.region))
         .transition()
         .duration(750)
-            .attrTween("d", arcTween);
+        .attrTween("d", arcTween);
 }
 
 function key(d) {
@@ -104,9 +107,9 @@ function key(d) {
 
 function findNeighborArc(i, data0, data1, key) {
     var d;
-    return (d = findPreceding(i, data0, data1, key)) ? {startAngle: d.endAngle, endAngle: d.endAngle}
-        : (d = findFollowing(i, data0, data1, key)) ? {startAngle: d.startAngle, endAngle: d.startAngle}
-        : null;
+    return (d = findPreceding(i, data0, data1, key)) ? { startAngle: d.endAngle, endAngle: d.endAngle }
+        : (d = findFollowing(i, data0, data1, key)) ? { startAngle: d.startAngle, endAngle: d.startAngle }
+            : null;
 }
 
 // Find the element in data0 that joins the highest preceding element in data1.
@@ -133,6 +136,8 @@ function findFollowing(i, data0, data1, key) {
 
 function arcTween(d) {
     var i = d3.interpolate(this._current, d);
-    this._current = i(1)
-    return (t) => { return arc(i(t)); };
+    this._current = i(1);
+    return function (t) {
+        return arc(i(t));
+    };
 }

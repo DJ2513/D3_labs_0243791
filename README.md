@@ -32,8 +32,8 @@ To Stop the server from running, go to the terminal and inside of it press **CON
 - [x] 6) Simulating update events  
 - [x] 7) Playing with transitions 
 - [x] Project II: Project Leaf 
-- [ ] 8) Event Handling
-- [ ] 9) Line chart
-- [ ] 10) Area chart
-- [ ] 11) Stacked area chart
-- [ ] 12) Pie/Donut chart
+- [x] 8) Event Handling
+- [x] 9) Line chart
+- [x] 10) Area chart
+- [x] 11) Stacked area chart
+- [x] 12) Pie/Donut chart

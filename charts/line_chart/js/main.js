@@ -2,8 +2,8 @@
 *    main.js
 */
 
-var margin = { left:80, right:100, top:50, bottom:100 },
-    height = 500 - margin.top - margin.bottom, 
+var margin = { left: 80, right: 100, top: 50, bottom: 100 },
+    height = 500 - margin.top - margin.bottom,
     width = 800 - margin.left - margin.right;
 
 var svg = d3.select("#chart-area").append("svg")
@@ -11,7 +11,7 @@ var svg = d3.select("#chart-area").append("svg")
     .attr("height", height + margin.top + margin.bottom);
 
 var g = svg.append("g")
-    .attr("transform", "translate(" + margin.left + 
+    .attr("transform", "translate(" + margin.left +
         ", " + margin.top + ")");
 
 // Time parser for x-scale
@@ -24,10 +24,10 @@ var x = d3.scaleTime().range([0, width]);
 var y = d3.scaleLinear().range([height, 0]);
 
 // Axis generators
-var xAxisCall = d3.axisBottom()
+var xAxisCall = d3.axisBottom();
 var yAxisCall = d3.axisLeft()
     .ticks(6)
-    .tickFormat((d) => { return parseInt(d / 1000) + "k"; });
+    .tickFormat((d) => { return (d / 1000) + "k"; });
 
 // Axis groups
 var xAxis = g.append("g")
@@ -35,7 +35,7 @@ var xAxis = g.append("g")
     .attr("transform", "translate(0," + height + ")");
 var yAxis = g.append("g")
     .attr("class", "y axis")
-    
+
 // Y-Axis label
 yAxis.append("text")
     .attr("class", "axis-title")
@@ -47,7 +47,9 @@ yAxis.append("text")
     .text("Population)");
 
 // Line path generator
-// TODO: Implement the line generator
+var line = d3.line()
+    .x(d => x(d.year))
+    .y(d => y(d.value));
 
 d3.json("data/example.json").then((data) => {
     // Data cleaning
@@ -57,14 +59,20 @@ d3.json("data/example.json").then((data) => {
     });
 
     // Set scale domains
-    // TODO: set domain of axes
+    x.domain(d3.extent(data, d => d.year));
+    y.domain([765000, 785000]);
 
     // Generate axes once scales have been set
-    xAxis.call(xAxisCall.scale(x))
-    yAxis.call(yAxisCall.scale(y))
+    xAxis.call(xAxisCall.scale(x));
+    yAxis.call(yAxisCall.scale(y));
 
     // Add line to chart
-    // TODO: add line path
+    g.append("path")
+        .attr("class", "line")
+        .attr("fill", "none")
+        .attr("stroke", "grey")
+        .attr("stroke-width", "3px")
+        .attr("d", line(data));
 
     /******************************** Tooltip Code ********************************/
 
@@ -108,7 +116,6 @@ d3.json("data/example.json").then((data) => {
         focus.select(".x-hover-line").attr("y2", height - y(d.value));
         focus.select(".y-hover-line").attr("x2", -x(d.year));
     }
+
     /******************************** Tooltip Code ********************************/
-
 });
-
