@@ -21,15 +21,15 @@ Serving HTTP on :: port 8000 (http://[::]:8000/) ...
 This will open up a server at port 8000. you can enter on your browser by typing in **http://localhost:8000**
 To Stop the server from running, go to the terminal and inside of it press **CONTROL + C** 
 
-## Pending labs
+## Labs, Challenges and Projects
 - [x] 1) D3 Fundamentals
 - [x] 2) Select and data binding
 - [x] 3) Load Data from File
 - [x] Challenge I: Buildings of the world 
 - [x] 4) Scales
-- [ ] 5) Margins, groups, axes and labels
-- [ ] Project I: Star Brewery
-- [ ] 6) Simulating update events  
+- [x] 5) Margins, groups, axes and labels
+- [x] Project I: Star Brewery
+- [x] 6) Simulating update events  
 - [ ] 7) Playing with transitions 
 - [ ] Project II: Project Leaf 
 - [ ] 8) Event Handling

@@ -28,10 +28,7 @@ d3.json("./data/buildings.json").then(data => {
   rect.enter()
     .append("rect")
     .attr("width", 40)
-    .attr("height", (d) => {
-      console.log(`${d.name}: ` + y(+d.height));
-      return y(+d.height)
-    })
+    .attr("height", (d) => { return y(+d.height) })
     .attr("x", (_d, i) => { return i * 50 })
     .attr("y", 100)
     .attr("fill", (_d, i) => { return d3.schemeSet3[i] });
