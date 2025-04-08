@@ -18,7 +18,7 @@ Once is up and running, we should see something like this on the console:
 ```
 Serving HTTP on :: port 8000 (http://[::]:8000/) ... 
 ```
-This will open up a server at port 8000. you can enter on your browser by typing in **http://localhost:8000**
+This will open up a server at port 8000. you can enter on your browser by typing in **http://localhost:8000**.
 To Stop the server from running, go to the terminal and inside of it press **CONTROL + C** 
 
 ## Labs, Challenges and Projects
